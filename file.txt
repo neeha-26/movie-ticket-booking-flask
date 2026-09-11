@@ -1,0 +1,12 @@
+Subject: Movie Booking Confirmed
+
+Hello {name},
+
+Your booking is successful!
+
+Movie : {movie}
+Seats : {seats}
+Date  : {date}
+Time  : {time}
+
+Enjoy your show

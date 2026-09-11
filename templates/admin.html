@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}
+Admin Panel
+{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="text-center">🎬 Admin Panel</h2>
+
+
+
+    <!-- ADD MOVIE FORM -->
+    <div class="card p-3 mt-4 shadow">
+        <h4>Add Movie</h4>
+
+        <form method="POST" action="{{ url_for('add_movie') }}">
+
+            <input type="text" name="title" placeholder="Movie Title"
+                   class="form-control mb-2" required>
+
+            <input type="text" name="poster"
+                   placeholder="Poster (images/movie.jpg OR URL)"
+                   class="form-control mb-2" required>
+
+            <button class="btn btn-success">Add Movie</button>
+
+        </form>
+    </div>
+
+    <!-- MOVIE LIST -->
+    <div class="row mt-4">
+
+        {% for movie in movies %}
+        <div class="col-md-3 mb-4">
+
+            <div class="card shadow">
+
+                {% if "http" in movie.poster %}
+                    <img src="{{ movie.poster }}" class="card-img-top">
+                {% else %}
+                    <img src="{{ url_for('static', filename=movie.poster) }}" class="card-img-top">
+                {% endif %}
+
+                <div class="card-body text-center">
+
+                    <h5>{{ movie.title }}</h5>
+
+                    <!-- DELETE BUTTON -->
+                   <a href="{{ url_for('delete_movie', movie_id=movie.id) }}"
+                   class="btn btn-danger btn-sm">
+                    Delete
+                </a>
+
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Bookings
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="text-center mb-5">
+
+    <h1 class="fw-bold">
+
+        🎟 My Bookings
+
+    </h1>
+
+    <p class="text-muted">
+
+        View all your booked movie tickets.
+
+    </p>
+
+</div>
+
+    {% if bookings %}
+
+    <div class="row">
+
+        {% for booking in bookings %}
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow booking-card">
+
+                <div class="row g-0">
+
+                    <div class="col-md-4">
+
+                        {% if booking.poster.startswith('http') %}
+                        <img src="{{ booking.poster }}"
+                             class="img-fluid rounded-start h-100"
+                             style="object-fit:cover;">
+                        {% else %}
+                        <img src="{{ url_for('static', filename=booking.poster) }}"
+                             class="img-fluid rounded-start h-100"
+                             style="object-fit:cover;">
+                        {% endif %}
+
+                    </div>
+
+                    <div class="col-md-8">
+
+                        <div class="card-body">
+
+                            <h3 class="fw-bold mb-3">
+
+    🎬 {{ booking.title }}
+
+</h3>
+
+<div class="mb-3">
+
+    <span class="badge bg-primary">
+        Movie Ticket
+    </span>
+
+    <span class="badge bg-success ms-2">
+        {{ booking.payment_status }}
+    </span>
+
+</div>
+
+<hr>
+
+                           <div class="row mb-2">
+
+    <div class="col-5 fw-bold">
+        🎟 Seat
+    </div>
+
+    <div class="col">
+        {{ booking.seat }}
+    </div>
+
+</div>
+
+<div class="row mb-2">
+
+    <div class="col-5 fw-bold">
+        📅 Date
+    </div>
+
+    <div class="col">
+        {{ booking.date }}
+    </div>
+
+</div>
+
+<div class="row mb-2">
+
+    <div class="col-5 fw-bold">
+        🕒 Time
+    </div>
+
+    <div class="col">
+        {{ booking.time }}
+    </div>
+
+</div>
+
+<div class="row mb-2">
+
+    <div class="col-5 fw-bold">
+        🆔 Booking ID
+    </div>
+
+    <div class="col">
+        {{ booking.booking_id }}
+    </div>
+
+</div>
+
+<div class="row mb-3">
+
+    <div class="col-5 fw-bold">
+        💳 Payment ID
+    </div>
+
+    <div class="col">
+        {{ booking.payment_id }}
+    </div>
+
+</div>
+
+                           <div class="d-grid">
+
+    <a href="{{ url_for('cancel_booking', booking_id=booking.booking_id) }}"
+       class="btn btn-outline-danger">
+
+        ❌ Cancel Booking
+
+    </a>
+
+</div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="text-center">
+
+        <h4>No bookings found.</h4>
+
+        <a href="{{ url_for('open_home_page') }}"
+           class="btn btn-primary mt-3">
+
+            Book Your First Movie
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

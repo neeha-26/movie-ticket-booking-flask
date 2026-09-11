@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}
+Booking Successful
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg mx-auto ticket-card" style="max-width:700px;">
+
+        <div class="card-header bg-success text-white text-center py-4">
+
+    <h2 class="mb-1">
+        🎉 Booking Confirmed
+    </h2>
+
+    <p class="mb-0">
+        Enjoy your movie!
+    </p>
+
+</div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-4 text-center">
+
+                    {% if movie.poster.startswith('http') %}
+                        <img src="{{ movie.poster }}"
+                             class="img-fluid rounded">
+                    {% else %}
+                        <img src="{{ url_for('static', filename=movie.poster) }}"
+                             class="img-fluid rounded">
+                    {% endif %}
+
+                </div>
+
+                <div class="col-md-8">
+                   <h2 class="fw-bold">
+    {{ movie.title }}
+</h2>
+
+<hr>
+
+<div class="row mb-2">
+    <div class="col-5 fw-bold">🎟 Seats</div>
+    <div class="col">{{ seats|join(", ") }}</div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-5 fw-bold">📅 Date</div>
+    <div class="col">{{ date }}</div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-5 fw-bold">🕒 Time</div>
+    <div class="col">{{ time }}</div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-5 fw-bold">💰 Amount</div>
+    <div class="col text-success fw-bold">
+        ₹{{ total }}
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-5 fw-bold">🆔 Booking ID</div>
+    <div class="col">{{ booking_id }}</div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-5 fw-bold">💳 Payment ID</div>
+    <div class="col">{{ payment_id }}</div>
+</div>
+
+<hr>
+
+<div class="alert alert-success text-center">
+
+    <h5 class="mb-1">
+        ✔ Payment Successful
+    </h5>
+
+    <small>
+        Your ticket has been booked successfully.
+    </small>
+
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+      <div class="card-footer text-center py-4">
+
+    <a href="{{ url_for('my_bookings') }}"
+       class="btn btn-primary btn-lg me-2">
+
+        📄 My Bookings
+
+    </a>
+
+    <a href="{{ url_for('open_home_page') }}"
+       class="btn btn-success btn-lg">
+
+        🎬 Book Another Movie
+
+    </a>
+
+</div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% block title %}
+Select Seats
+{% endblock %}
+
+{% block content %}
+
+{% set letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+
+<div class="container mt-4">
+
+    <h2 class="text-center mb-4">{{ movie.title }}</h2>
+
+     <div class="container text-center mb-4">
+
+    <h2>{{ movie.title }}</h2>
+
+    <h5 class="text-secondary">
+
+        📅 {{ show_date }}
+
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+
+        🕒 {{ show_time }}
+
+    </h5>
+
+</div>
+
+</div>
+
+<div class="theatre">
+
+    <div class="container text-center mb-4">
+
+    <div class="d-flex justify-content-center gap-4 flex-wrap">
+
+        <div>
+            <span class="badge bg-success">&nbsp;&nbsp;&nbsp;</span>
+            Available
+        </div>
+
+        <div>
+            <span class="badge bg-warning text-dark">&nbsp;&nbsp;&nbsp;</span>
+            Selected
+        </div>
+
+        <div>
+            <span class="badge bg-danger">&nbsp;&nbsp;&nbsp;</span>
+            Booked
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- SCREEN -->
+    <div class="screen">
+        SCREEN
+    </div>
+
+    <div class="hall">
+
+        {% for row in range(1,12) %}
+        <div class="seat-row">
+
+            <!-- LEFT BLOCK -->
+            <div class="block">
+
+                {% for col in range(1,9) %}
+
+                {% set seat = letters[row-1] ~ col %}
+
+                <div
+                        class="seat {% if seat in booked %}booked{% else %}available{% endif %}"
+
+                        {% if seat not in booked %}
+                        onclick="selectSeat(this)"
+                        {% endif %}
+
+                        data-seat="{{ seat }}">
+
+                    {{ seat }}
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="gap"></div>
+
+            <!-- RIGHT BLOCK -->
+            <div class="block">
+
+                {% for col in range(9,17) %}
+
+                {% set seat = letters[row-1] ~ col %}
+
+                <div
+                        class="seat {% if seat in booked %}booked{% else %}available{% endif %}"
+
+                        {% if seat not in booked %}
+                        onclick="selectSeat(this)"
+                        {% endif %}
+
+                        data-seat="{{ seat }}">
+
+                    {{ seat }}
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="row-number">
+                {{ letters[row-1] }}
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- LEGEND -->
+
+    <div class="text-center mt-4">
+
+        <span class="badge bg-success p-2">Available</span>
+
+        <span class="badge bg-danger p-2 mx-3">Booked</span>
+
+        <span class="badge bg-primary p-2">Selected</span>
+
+    </div>
+
+    <!-- SELECTED -->
+
+    <h5 class="text-center mt-4">
+
+        Selected Seats :
+        <span id="selectedSeats">
+            None
+        </span>
+
+    </h5>
+
+    <h4 class="text-center">
+
+        Total :
+        ₹<span id="totalPrice">0</span>
+
+    </h4>
+
+    <!-- PAYMENT FORM -->
+
+    <form method="POST">
+
+        <input
+                type="hidden"
+                name="selected_seats"
+                id="seatInput">
+
+        <input
+                type="hidden"
+                name="show_date"
+                value="{{ show_date }}">
+
+        <input
+                type="hidden"
+                name="show_time"
+                value="{{ show_time }}">
+
+        <div class="text-center mt-4">
+
+            <button class="btn btn-warning btn-lg">
+                Proceed to Payment
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+
+let selected=[];
+
+const ticketPrice=150;
+
+function selectSeat(el){
+
+    if(el.classList.contains("booked"))
+        return;
+
+    el.classList.toggle("selected");
+
+    let seat=el.dataset.seat;
+
+    if(selected.includes(seat)){
+        selected=selected.filter(s=>s!==seat);
+    }else{
+        selected.push(seat);
+    }
+
+    document.getElementById("selectedSeats").innerText=
+        selected.length?selected.join(", "):"None";
+
+    document.getElementById("seatInput").value=
+        selected.join(",");
+
+    document.getElementById("totalPrice").innerText=
+        selected.length*ticketPrice;
+
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ movie.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row">
+
+        <!-- Movie Poster -->
+        <div class="col-md-4 text-center">
+
+            {% if movie.poster.startswith('http') %}
+                <img src="{{ movie.poster }}" class="img-fluid rounded shadow" style="height:500px;">
+            {% else %}
+                <img src="{{ url_for('static', filename=movie.poster) }}"
+                     class="img-fluid rounded shadow"
+                     style="height:500px;">
+            {% endif %}
+
+        </div>
+
+
+        <!-- Movie Details -->
+        <div class="col-md-8">
+
+            <h1 class="display-5 fw-bold">{{ movie.title }}</h1>
+
+            <hr>
+
+            <p>
+                <strong>Language:</strong> Telugu
+            </p>
+
+            <p>
+                <strong>Genre:</strong> Action • Drama
+            </p>
+
+            <p>
+                <strong>Duration:</strong> 2h 45m
+            </p>
+
+            <p>
+                <strong>Rating:</strong> ⭐ 8.8/10
+            </p>
+
+            <p>
+                <strong>Description</strong>
+            </p>
+
+            <p class="text-muted">
+                Experience {{ movie.title }} on the big screen with
+                amazing visuals, Dolby sound and comfortable seating.
+                Book your tickets now and enjoy the show with your
+                friends and family.
+            </p>
+
+            <br>
+
+           <a href="{{ url_for('select_show', movie_id=movie.id) }}"
+   class="btn btn-danger btn-lg">
+    Book Tickets
+</a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

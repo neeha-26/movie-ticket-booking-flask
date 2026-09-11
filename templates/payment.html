@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% block title %}
+Payment
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg p-4">
+
+    <div class="text-center mb-4">
+
+    <h2 class="fw-bold">
+        Confirm Booking
+    </h2>
+
+    <p class="text-muted">
+        Review your booking details before payment.
+    </p>
+
+</div>
+     <div class="card border-0 shadow-sm mb-4">
+
+    <div class="card-body">
+
+        <div class="row mb-3">
+
+            <div class="col-5 fw-bold">
+                🎬 Movie
+            </div>
+
+            <div class="col">
+                {{ movie.title }}
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+
+            <div class="col-5 fw-bold">
+                📅 Date
+            </div>
+
+            <div class="col">
+                {{ show_date }}
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+
+            <div class="col-5 fw-bold">
+                🕒 Time
+            </div>
+
+            <div class="col">
+                {{ show_time }}
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+
+            <div class="col-5 fw-bold">
+                💺 Seats
+            </div>
+
+            <div class="col">
+                {{ seats|join(", ") }}
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+
+            <div class="col-5 fw-bold">
+                🎟 Tickets
+            </div>
+
+            <div class="col">
+                {{ seats|length }}
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+
+            <div class="col-5 fw-bold">
+                💰 Price / Seat
+            </div>
+
+            <div class="col">
+                ₹150
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-5 fw-bold fs-5">
+                Total
+            </div>
+
+            <div class="col text-success fw-bold fs-4">
+                ₹{{ total }}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+        <hr>
+
+        <form action="{{ url_for('confirm_payment') }}" method="POST">
+
+            <input type="hidden" name="movie_id" value="{{ movie.id }}">
+            <input type="hidden" name="show_date" value="{{ show_date }}">
+            <input type="hidden" name="show_time" value="{{ show_time }}">
+            <input type="hidden" name="selected_seats" value="{{ seats|join(',') }}">
+
+
+          <h4 class="mb-4 fw-bold">
+    Choose Payment Method
+</h4>
+
+<div class="form-check border rounded p-3 mb-3">
+
+    <input class="form-check-input"
+           type="radio"
+           name="payment_method"
+           value="UPI"
+           checked
+           required>
+
+    <label class="form-check-label ms-2">
+        📱 <strong>UPI</strong><br>
+        <small class="text-muted">
+            Google Pay, PhonePe, Paytm
+        </small>
+    </label>
+
+</div>
+
+<div class="form-check border rounded p-3 mb-3">
+
+    <input class="form-check-input"
+           type="radio"
+           name="payment_method"
+           value="Credit Card">
+
+    <label class="form-check-label ms-2">
+        💳 <strong>Credit Card</strong><br>
+        <small class="text-muted">
+            Visa, Mastercard, RuPay
+        </small>
+    </label>
+
+</div>
+
+<div class="form-check border rounded p-3 mb-3">
+
+    <input class="form-check-input"
+           type="radio"
+           name="payment_method"
+           value="Debit Card">
+
+    <label class="form-check-label ms-2">
+        💳 <strong>Debit Card</strong><br>
+        <small class="text-muted">
+            All major banks accepted
+        </small>
+    </label>
+
+</div>
+
+<div class="form-check border rounded p-3 mb-4">
+
+    <input class="form-check-input"
+           type="radio"
+           name="payment_method"
+           value="Net Banking">
+
+    <label class="form-check-label ms-2">
+        🏦 <strong>Net Banking</strong><br>
+        <small class="text-muted">
+            Secure online banking
+        </small>
+    </label>
+
+</div>
+
+    <button
+        id="payButton"
+        type="submit"
+        class="btn btn-success btn-lg w-100">
+
+    💳 Pay ₹{{ total }}
+
+</button>
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+document.querySelector("form").addEventListener("submit", function () {
+
+    let btn = document.getElementById("payButton");
+
+    btn.disabled = true;
+
+    btn.innerHTML = `
+        <span class="spinner-border spinner-border-sm"></span>
+        Processing Payment...
+    `;
+
+});
+
+</script>
+
+{% endblock %}

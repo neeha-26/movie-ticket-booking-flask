@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}
+Select Show
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7">
+
+            <div class="card shadow p-4">
+
+                <h2 class="text-center mb-4">
+                    {{ movie.title }}
+                </h2>
+
+                <form method="POST">
+
+                    <!-- Date -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            <strong>Select Date</strong>
+                        </label>
+
+                      <input
+    type="date"
+    class="form-control"
+    id="show_date"
+    name="show_date"
+    required>
+                    </div>
+
+                    <!-- Time -->
+                    <h5 class="mb-3">
+    Select Show Time
+</h5>
+
+<div class="row g-3">
+
+    <div class="col-6">
+        <input type="radio"
+               class="btn-check"
+               name="show_time"
+               id="show1"
+               value="10:00 AM"
+               required>
+
+        <label class="btn btn-outline-success w-100 p-3" for="show1">
+
+            <strong>10:00 AM</strong><br>
+            Morning Show
+
+        </label>
+    </div>
+
+    <div class="col-6">
+        <input type="radio"
+               class="btn-check"
+               name="show_time"
+               id="show2"
+               value="2:00 PM">
+
+        <label class="btn btn-outline-success w-100 p-3" for="show2">
+
+            <strong>2:00 PM</strong><br>
+            Matinee
+
+        </label>
+    </div>
+
+    <div class="col-6">
+        <input type="radio"
+               class="btn-check"
+               name="show_time"
+               id="show3"
+               value="6:00 PM">
+
+        <label class="btn btn-outline-success w-100 p-3" for="show3">
+
+            <strong>6:00 PM</strong><br>
+            Evening Show
+
+        </label>
+    </div>
+
+    <div class="col-6">
+        <input type="radio"
+               class="btn-check"
+               name="show_time"
+               id="show4"
+               value="9:30 PM">
+
+        <label class="btn btn-outline-success w-100 p-3" for="show4">
+
+            <strong>9:30 PM</strong><br>
+            Night Show
+
+        </label>
+    </div>
+
+</div>
+
+                    <div class="text-center mt-5">
+
+    <button class="btn btn-danger btn-lg px-5">
+
+        Continue →
+
+    </button>
+
+</div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+<script>
+
+const today = new Date().toISOString().split("T")[0];
+
+document.getElementById("show_date").setAttribute("min", today);
+
+</script>

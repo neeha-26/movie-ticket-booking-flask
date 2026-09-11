@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="box">
+  <h1>Movie Ticket Booking</h1>
+  <!-- TODO: Hide the Login/Registration buttons for logged-in users -->
+
+  {% if not logged_in %}
+
+
+  <a href="{{ url_for('login') }}" class="btn btn-primary"
+    >Login</a
+  >
+  <a
+    href="{{ url_for('register') }}"
+    class="btn btn-secondary"
+    >Register</a
+  >
+  {% else %}
+<a href="{{ url_for('open_home_page') }}">Go to Movies</a>
+  {% endif %}
+</div>
+
+{% endblock %}
